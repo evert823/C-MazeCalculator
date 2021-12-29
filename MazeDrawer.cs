@@ -72,14 +72,14 @@ namespace MazeCalculator
                     
                     if (i < this.MyMaze.MazeWidth - 1)
                     {
-                        if (this.MyMaze.MyCellPairs[i, j, i + 1, j].CellsDirectlyConnected == false)
+                        if (this.MyMaze.MyWallsOfCell[i, j].OpenToRight == false)
                         {
                             g.DrawLine(blackPen, MySurrounding.rightx, MySurrounding.bottomy, MySurrounding.rightx, MySurrounding.topy);
                         }
                     }
                     if (j < this.MyMaze.MazeHeight - 1)
                     {
-                        if (this.MyMaze.MyCellPairs[i, j, i, j + 1].CellsDirectlyConnected == false)
+                        if (this.MyMaze.MyWallsOfCell[i, j].OpenToTop == false)
                         {
                             g.DrawLine(blackPen, MySurrounding.leftx, MySurrounding.topy, MySurrounding.rightx, MySurrounding.topy);
                         }
