@@ -69,7 +69,32 @@ namespace MazeCalculator
                 for (j = 0; j < this.MyMaze.MazeHeight; j++)
                 {
                     Surrounding MySurrounding = this.CellSurrounding(i, j);
-                    
+
+                    if (MyMaze.CellSetColor[i, j] != MarkColor.White)
+                    {
+                        Rectangle rect = new Rectangle(MySurrounding.leftx + (2 * edgemarge), MySurrounding.topy + (2 * edgemarge), PixelsPerCell - (4 * edgemarge), PixelsPerCell - (4 * edgemarge));
+
+                        SolidBrush somecolorBrush = new SolidBrush(Color.White);
+
+                        switch (MyMaze.CellSetColor[i, j])
+                        {
+                            case MarkColor.Blue:
+                                somecolorBrush.Color = Color.Blue;
+                                break;
+                            case MarkColor.Red:
+                                somecolorBrush.Color = Color.Red;
+                                break;
+                            case MarkColor.Green:
+                                somecolorBrush.Color = Color.Green;
+                                break;
+                            case MarkColor.Yellow:
+                                somecolorBrush.Color = Color.Yellow;
+                                break;
+                        }
+
+
+                        g.FillRectangle(somecolorBrush, rect);
+                    }
                     if (i < this.MyMaze.MazeWidth - 1)
                     {
                         if (this.MyMaze.MyWallsOfCell[i, j].OpenToRight == false)

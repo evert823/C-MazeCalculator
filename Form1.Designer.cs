@@ -47,6 +47,10 @@ namespace MazeCalculator
             this.btnDisconnectAll = new System.Windows.Forms.Button();
             this.btnConnectAll = new System.Windows.Forms.Button();
             this.btnCalculateDistances = new System.Windows.Forms.Button();
+            this.lblPointFrom = new System.Windows.Forms.Label();
+            this.lblPointTo = new System.Windows.Forms.Label();
+            this.txbPointFrom = new System.Windows.Forms.TextBox();
+            this.txbPointTo = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnGeneratePerfectMaze
@@ -214,11 +218,49 @@ namespace MazeCalculator
             this.btnCalculateDistances.UseVisualStyleBackColor = true;
             this.btnCalculateDistances.Click += new System.EventHandler(this.btnCalculateDistances_Click);
             // 
+            // lblPointFrom
+            // 
+            this.lblPointFrom.AutoSize = true;
+            this.lblPointFrom.Location = new System.Drawing.Point(621, 340);
+            this.lblPointFrom.Name = "lblPointFrom";
+            this.lblPointFrom.Size = new System.Drawing.Size(124, 17);
+            this.lblPointFrom.TabIndex = 18;
+            this.lblPointFrom.Text = "Point from e.g. 3,1";
+            // 
+            // lblPointTo
+            // 
+            this.lblPointTo.AutoSize = true;
+            this.lblPointTo.Location = new System.Drawing.Point(621, 381);
+            this.lblPointTo.Name = "lblPointTo";
+            this.lblPointTo.Size = new System.Drawing.Size(108, 17);
+            this.lblPointTo.TabIndex = 19;
+            this.lblPointTo.Text = "Point to e.g. 5,8";
+            // 
+            // txbPointFrom
+            // 
+            this.txbPointFrom.Location = new System.Drawing.Point(765, 340);
+            this.txbPointFrom.Name = "txbPointFrom";
+            this.txbPointFrom.Size = new System.Drawing.Size(133, 22);
+            this.txbPointFrom.TabIndex = 20;
+            this.txbPointFrom.Text = "3,1";
+            // 
+            // txbPointTo
+            // 
+            this.txbPointTo.Location = new System.Drawing.Point(765, 382);
+            this.txbPointTo.Name = "txbPointTo";
+            this.txbPointTo.Size = new System.Drawing.Size(133, 22);
+            this.txbPointTo.TabIndex = 21;
+            this.txbPointTo.Text = "5,8";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1001, 494);
+            this.ClientSize = new System.Drawing.Size(1001, 495);
+            this.Controls.Add(this.txbPointTo);
+            this.Controls.Add(this.txbPointFrom);
+            this.Controls.Add(this.lblPointTo);
+            this.Controls.Add(this.lblPointFrom);
             this.Controls.Add(this.btnCalculateDistances);
             this.Controls.Add(this.btnConnectAll);
             this.Controls.Add(this.btnDisconnectAll);
@@ -265,6 +307,10 @@ namespace MazeCalculator
         private System.Windows.Forms.Button btnDisconnectAll;
         private System.Windows.Forms.Button btnConnectAll;
         private System.Windows.Forms.Button btnCalculateDistances;
+        private System.Windows.Forms.Label lblPointFrom;
+        private System.Windows.Forms.Label lblPointTo;
+        private System.Windows.Forms.TextBox txbPointFrom;
+        private System.Windows.Forms.TextBox txbPointTo;
     }
 }
 

@@ -31,6 +31,14 @@ namespace MazeCalculator
         }
     }
 
+    public enum MarkColor
+    {
+        White,
+        Blue,
+        Red,
+        Green,
+        Yellow
+    }
     public struct CellPair
     {
         public ushort PathDistance; //Non-commutatively stored distance FROM i1, j1 TO i2, j2
@@ -50,6 +58,7 @@ namespace MazeCalculator
         public int MazeHeight;
         public ushort NoPath;
 
+        public MarkColor[,] CellSetColor;
         public CellPair[,,,] MyCellPairs;
         public WallsOfCell[,] MyWallsOfCell;
         public int[,] NeighbourCount;
@@ -78,6 +87,8 @@ namespace MazeCalculator
             this.MyWallsOfCell = null;
             this.MyWallsOfCell = new WallsOfCell[this.MazeWidth, this.MazeHeight];
 
+            this.CellSetColor = null;
+            this.CellSetColor = new MarkColor[this.MazeWidth, this.MazeHeight];
 
             for (i1 = 0; i1 < this.MazeWidth; i1++)
             {
@@ -87,8 +98,15 @@ namespace MazeCalculator
                     this.MyWallsOfCell[i1, j1].OpenToRight = false;
                     this.MyWallsOfCell[i1, j1].OpenToBottom = false;
                     this.MyWallsOfCell[i1, j1].OpenToLeft = false;
+                    this.CellSetColor[i1, j1] = MarkColor.White;
                 }
             }
+
+            //Mark with colors like this:
+            //this.CellSetColor[2, 3] = MarkColor.Blue;
+            //this.CellSetColor[8, 7] = MarkColor.Red;
+            //this.CellSetColor[4, 11] = MarkColor.Green;
+            //this.CellSetColor[9, 5] = MarkColor.Yellow;
 
         }
 

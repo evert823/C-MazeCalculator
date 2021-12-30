@@ -13,6 +13,15 @@ namespace MazeCalculator
 {
     public partial class Form1 : Form
     {
+        public struct PointFromToEntry
+        {
+            public int i1;
+            public int j1;
+            public int i2;
+            public int j2;
+            public bool ValidEntry;
+        }
+        
         public Maze MyMaze;
         public MazeDrawer MyMazeDrawer;
 
@@ -108,6 +117,52 @@ namespace MazeCalculator
             MessageBox.Show("DONE");
         }
 
+        private PointFromToEntry ValidatePointFromTo()
+        {
+            PointFromToEntry MyResult;
+
+            MyResult.i1 = 0;
+            MyResult.j1 = 0;
+            MyResult.i2 = 0;
+            MyResult.j2 = 0;
+            MyResult.ValidEntry = false;
+
+            string s1 = txbPointFrom.Text;
+            string s2 = txbPointTo.Text;
+
+            string[] a1 = s1.Split(',');
+            string[] a2 = s2.Split(',');
+
+            if (a1.Length != 2 || a2.Length != 2)
+            {
+                MessageBox.Show("Use format like 3,1 or 5,8 for point coordinates");
+                return MyResult;
+            }
+
+            if (int.TryParse(a1[0], out MyResult.i1) == false)
+            {
+                MessageBox.Show("Use format like 3,1 or 5,8 for point coordinates");
+                return MyResult;
+            }
+            if (int.TryParse(a1[1], out MyResult.j1) == false)
+            {
+                MessageBox.Show("Use format like 3,1 or 5,8 for point coordinates");
+                return MyResult;
+            }
+            if (int.TryParse(a2[0], out MyResult.i2) == false)
+            {
+                MessageBox.Show("Use format like 3,1 or 5,8 for point coordinates");
+                return MyResult;
+            }
+            if (int.TryParse(a2[1], out MyResult.j2) == false)
+            {
+                MessageBox.Show("Use format like 3,1 or 5,8 for point coordinates");
+                return MyResult;
+            }
+            MyResult.ValidEntry = true;
+            return MyResult;
+        }
+
         private void btnCalculateDistances_Click(object sender, EventArgs e)
         {
             int i1;
@@ -115,6 +170,7 @@ namespace MazeCalculator
             int i2;
             int j2;
 
+            PointFromToEntry a = ValidatePointFromTo();
 
             MyMaze.calculatePathDistance();
 
