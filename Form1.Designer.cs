@@ -51,6 +51,10 @@ namespace MazeCalculator
             this.lblPointTo = new System.Windows.Forms.Label();
             this.txbPointFrom = new System.Windows.Forms.TextBox();
             this.txbPointTo = new System.Windows.Forms.TextBox();
+            this.btnClearColors = new System.Windows.Forms.Button();
+            this.rbPathAB = new System.Windows.Forms.RadioButton();
+            this.rbPathAC = new System.Windows.Forms.RadioButton();
+            this.rbPathXY = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // btnGeneratePerfectMaze
@@ -252,11 +256,58 @@ namespace MazeCalculator
             this.txbPointTo.TabIndex = 21;
             this.txbPointTo.Text = "5,8";
             // 
+            // btnClearColors
+            // 
+            this.btnClearColors.Location = new System.Drawing.Point(730, 75);
+            this.btnClearColors.Name = "btnClearColors";
+            this.btnClearColors.Size = new System.Drawing.Size(123, 23);
+            this.btnClearColors.TabIndex = 22;
+            this.btnClearColors.Text = "Clear colors";
+            this.btnClearColors.UseVisualStyleBackColor = true;
+            this.btnClearColors.Click += new System.EventHandler(this.btnClearColors_Click);
+            // 
+            // rbPathAB
+            // 
+            this.rbPathAB.AutoSize = true;
+            this.rbPathAB.Location = new System.Drawing.Point(368, 379);
+            this.rbPathAB.Name = "rbPathAB";
+            this.rbPathAB.Size = new System.Drawing.Size(138, 21);
+            this.rbPathAB.TabIndex = 23;
+            this.rbPathAB.TabStop = true;
+            this.rbPathAB.Text = "Show path in png";
+            this.rbPathAB.UseVisualStyleBackColor = true;
+            // 
+            // rbPathAC
+            // 
+            this.rbPathAC.AutoSize = true;
+            this.rbPathAC.Location = new System.Drawing.Point(368, 406);
+            this.rbPathAC.Name = "rbPathAC";
+            this.rbPathAC.Size = new System.Drawing.Size(191, 21);
+            this.rbPathAC.TabIndex = 24;
+            this.rbPathAC.TabStop = true;
+            this.rbPathAC.Text = "Show path to most distant";
+            this.rbPathAC.UseVisualStyleBackColor = true;
+            // 
+            // rbPathXY
+            // 
+            this.rbPathXY.AutoSize = true;
+            this.rbPathXY.Location = new System.Drawing.Point(368, 433);
+            this.rbPathXY.Name = "rbPathXY";
+            this.rbPathXY.Size = new System.Drawing.Size(191, 21);
+            this.rbPathXY.TabIndex = 25;
+            this.rbPathXY.TabStop = true;
+            this.rbPathXY.Text = "Show overall longest path";
+            this.rbPathXY.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1001, 495);
+            this.Controls.Add(this.rbPathXY);
+            this.Controls.Add(this.rbPathAC);
+            this.Controls.Add(this.rbPathAB);
+            this.Controls.Add(this.btnClearColors);
             this.Controls.Add(this.txbPointTo);
             this.Controls.Add(this.txbPointFrom);
             this.Controls.Add(this.lblPointTo);
@@ -311,6 +362,10 @@ namespace MazeCalculator
         private System.Windows.Forms.Label lblPointTo;
         private System.Windows.Forms.TextBox txbPointFrom;
         private System.Windows.Forms.TextBox txbPointTo;
+        private System.Windows.Forms.Button btnClearColors;
+        private System.Windows.Forms.RadioButton rbPathAB;
+        private System.Windows.Forms.RadioButton rbPathAC;
+        private System.Windows.Forms.RadioButton rbPathXY;
     }
 }
 

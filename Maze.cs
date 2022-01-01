@@ -29,6 +29,17 @@ namespace MazeCalculator
             this.IsIncluded = null;
             this.IsIncluded = new bool[pWidth, pHeight];
         }
+
+        public void AddCell(int i, int j)
+        {
+            if (this.IsIncluded[i, j] == false)
+            {
+                this.CellCount += 1;
+                this.csi[this.CellCount - 1] = i;
+                this.csj[this.CellCount - 1] = j;
+                this.IsIncluded[i, j] = true;
+            }
+        }
     }
 
     public enum MarkColor
@@ -39,11 +50,6 @@ namespace MazeCalculator
         Green,
         Yellow
     }
-    public struct CellPair
-    {
-        public ushort PathDistance; //Non-commutatively stored distance FROM i1, j1 TO i2, j2
-    }
-
 
     public struct WallsOfCell
     {
@@ -52,14 +58,22 @@ namespace MazeCalculator
         public bool OpenToBottom;
         public bool OpenToLeft;
     }
+
+    public struct CalculatePathDistanceResult
+    {
+        public int RequestedDistance;
+        public int MostDistanti;
+        public int MostDistantj;
+        public int MostDistantd;
+    }
+
     public class Maze
     {
         public int MazeWidth;
         public int MazeHeight;
-        public ushort NoPath;
+        public int NoPath;
 
         public MarkColor[,] CellSetColor;
-        public CellPair[,,,] MyCellPairs;
         public WallsOfCell[,] MyWallsOfCell;
         public int[,] NeighbourCount;
         public int[,,] Neighbouri;
@@ -70,6 +84,27 @@ namespace MazeCalculator
 
         private int[,] SetNumber;
         private int NumberOfSets;
+
+        //Point A = userdefined starting point
+        //Point B = userdefined end point
+        //Point C = point most distant from A
+        //Point X and Y are two points with maximum distance that occurs in current maze
+        public int pAi;
+        public int pAj;
+        public int pBi;
+        public int pBj;
+        public int distance_AB;
+        public int pCi;
+        public int pCj;
+        public int distance_AC;
+        public int pXi;
+        public int pXj;
+        public int pYi;
+        public int pYj;
+        public int distance_XY;
+        private CellSet Path_AB;
+        private CellSet Path_AC;
+        private CellSet Path_XY;
 
         public Maze(int pWidth, int pHeight)
         {
@@ -90,6 +125,8 @@ namespace MazeCalculator
             this.CellSetColor = null;
             this.CellSetColor = new MarkColor[this.MazeWidth, this.MazeHeight];
 
+            this.NoPath = (this.MazeWidth * this.MazeHeight) + 1;//Exclusive upper limit for a real distance
+
             for (i1 = 0; i1 < this.MazeWidth; i1++)
             {
                 for (j1 = 0; j1 < this.MazeHeight; j1++)
@@ -98,10 +135,9 @@ namespace MazeCalculator
                     this.MyWallsOfCell[i1, j1].OpenToRight = false;
                     this.MyWallsOfCell[i1, j1].OpenToBottom = false;
                     this.MyWallsOfCell[i1, j1].OpenToLeft = false;
-                    this.CellSetColor[i1, j1] = MarkColor.White;
                 }
             }
-
+            this.ClearColors();
             //Mark with colors like this:
             //this.CellSetColor[2, 3] = MarkColor.Blue;
             //this.CellSetColor[8, 7] = MarkColor.Red;
@@ -110,36 +146,15 @@ namespace MazeCalculator
 
         }
 
-
-        private void InitDistance()
+        public void ClearColors()
         {
             int i1;
             int j1;
-            int i2;
-            int j2;
-
-            this.MyCellPairs = null;
-            this.MyCellPairs = new CellPair[this.MazeWidth, this.MazeHeight, this.MazeWidth, this.MazeHeight];
-
-            this.NoPath = Convert.ToUInt16((this.MazeWidth * this.MazeHeight) + 1);//Exclusive upper limit for a real distance
-
             for (i1 = 0; i1 < this.MazeWidth; i1++)
             {
                 for (j1 = 0; j1 < this.MazeHeight; j1++)
                 {
-                    for (i2 = 0; i2 < this.MazeWidth; i2++)
-                    {
-                        for (j2 = 0; j2 < this.MazeHeight; j2++)
-                        {
-                            if (i1 == i2 & j1 == j2)
-                            {
-                                this.MyCellPairs[i1, j1, i2, j2].PathDistance = 0;
-                            } else
-                            {
-                                this.MyCellPairs[i1, j1, i2, j2].PathDistance = this.NoPath;
-                            }
-                        }
-                    }
+                    this.CellSetColor[i1, j1] = MarkColor.White;
                 }
             }
         }
@@ -221,6 +236,19 @@ namespace MazeCalculator
             }
         }
 
+        private void MarkCellSet(ref CellSet pCellSet, MarkColor pColor)
+        {
+            int n;
+            int i;
+            int j;
+
+            for (n = 0; n < pCellSet.CellCount; n++)
+            {
+                i = pCellSet.csi[n];
+                j = pCellSet.csj[n];
+                this.CellSetColor[i, j] = pColor;
+            }
+        }
         private void CopyCellSet(CellSet pCellSetFrom, CellSet pCellSetTo)
         {
             int c;
@@ -236,23 +264,6 @@ namespace MazeCalculator
             pCellSetTo.CellCount = pCellSetFrom.CellCount;
         }
 
-        public void calculatePathDistance()
-        {
-            int i1;
-            int j1;
-
-            this.InitDistance();
-            this.CalculateNeighbours();
-
-            for (i1 = 0; i1 < this.MazeWidth; i1++)
-            {
-                for (j1 = 0; j1 < this.MazeHeight; j1++)
-                {
-                    CalculatePathDistanceFrom(i1, j1);
-                }
-            }
-            MessageBox.Show("Distances have been calculated");
-        }
 
         private void CalculateNeighbours()
         {
@@ -306,12 +317,87 @@ namespace MazeCalculator
             }
         }
 
-
-        private void CalculatePathDistanceFrom(int i1, int j1)
+        public void calculatePathDistance(bool MarkAB, bool MarkAC, bool MarkXY)
         {
+            int i1;
+            int j1;
+
+            this.CalculateNeighbours();
+            this.ClearColors();
+
+            CellSet tmpPath_AB;
+            CellSet tmpPath_AC;
+
+            this.Path_AB = new CellSet(this.MazeWidth, this.MazeHeight);
+            this.Path_AC = new CellSet(this.MazeWidth, this.MazeHeight);
+            this.Path_XY = new CellSet(this.MazeWidth, this.MazeHeight);
+            tmpPath_AB = new CellSet(this.MazeWidth, this.MazeHeight);
+            tmpPath_AC = new CellSet(this.MazeWidth, this.MazeHeight);
+
+            CalculatePathDistanceResult MyResult;
+            MyResult = CalculatePathDistanceFrom(this.pAi, this.pAj, this.pBi, this.pBj, ref this.Path_AB, ref this.Path_AC);
+            this.distance_AB = MyResult.RequestedDistance;
+
+            this.pCi = MyResult.MostDistanti;
+            this.pCj = MyResult.MostDistantj;
+            this.distance_AC = MyResult.MostDistantd;
+
+            MessageBox.Show("Requested distance : " + this.distance_AB.ToString());
+            MessageBox.Show("Max distance from this point : " + this.distance_AC.ToString()
+                        + " --> " + this.pCi.ToString() + "," + this.pCj.ToString());
+
+            this.distance_XY = -1;
+            this.pXi = -1;
+            this.pXj = -1;
+            this.pYi = -1;
+            this.pYj = -1;
+
+            for (i1 = 0; i1 < this.MazeWidth; i1++)
+            {
+                for (j1 = 0; j1 < this.MazeHeight; j1++)
+                {
+                    MyResult = CalculatePathDistanceFrom(i1, j1, 0, 0, ref tmpPath_AB, ref tmpPath_AC);
+                    if (MyResult.MostDistantd > this.distance_XY)
+                    {
+                        this.distance_XY = MyResult.MostDistantd;
+                        this.pXi = i1;
+                        this.pXj = j1;
+                        this.pYi = MyResult.MostDistanti;
+                        this.pYj = MyResult.MostDistantj;
+                        this.CopyCellSet(tmpPath_AC, this.Path_XY);
+                    }
+                }
+            }
+
+            if (MarkAB == true)
+            {
+                this.MarkCellSet(ref this.Path_AB, MarkColor.Red);
+            }
+            if (MarkAC == true)
+            {
+                this.MarkCellSet(ref this.Path_AC, MarkColor.Yellow);
+            }
+            if (MarkXY == true)
+            {
+                this.MarkCellSet(ref this.Path_XY, MarkColor.Green);
+            }
+
+            MessageBox.Show("Max distance overall : " + this.distance_XY.ToString() + " --> " + this.pXi.ToString() + "," + this.pXj.ToString() + "," + this.pYi.ToString() + "," + this.pYj.ToString());
+        }
+
+
+        private CalculatePathDistanceResult CalculatePathDistanceFrom(int fromi, int fromj, int toi, int toj, ref CellSet RequestedPath, ref CellSet PathToMostDistant)
+        {
+            CalculatePathDistanceResult MyResult;
+            MyResult = new CalculatePathDistanceResult();
+            MyResult.MostDistantd = this.NoPath;
+            MyResult.RequestedDistance = this.NoPath;
+            MyResult.MostDistanti = -1;
+            MyResult.MostDistantj = -1;
+            
             CellSet RingA;
             CellSet RingB;
-            ushort hRouteDistance;
+            int hRouteDistance;
             int r;
             int n;
             int i2;
@@ -320,10 +406,68 @@ namespace MazeCalculator
             RingA = new CellSet(this.MazeWidth, this.MazeHeight);
             RingB = new CellSet(this.MazeWidth, this.MazeHeight);
 
-            RingA.csi[0] = i1;
-            RingA.csj[0] = j1;
-            RingA.IsIncluded[i1, j1] = true;
-            RingA.CellCount = 1;
+            int[,] PathDistanceTo;
+
+            void LoadPath(int ti, int tj, ref CellSet Path_ti_tj_fromi_fromj)
+            {
+                int ci;
+                int cj;
+                int nb;
+                int ni;
+                int nj;
+
+                Path_ti_tj_fromi_fromj.ResetCellSet(this.MazeWidth, this.MazeHeight);
+
+                if (ti == -1 || tj == -1)
+                {
+                    return;
+                }
+
+                if (PathDistanceTo[ti, tj] == this.NoPath)
+                {
+                    return;
+                }
+
+                ci = ti;
+                cj = tj;
+
+                Path_ti_tj_fromi_fromj.AddCell(ci, cj);
+
+                while (Path_ti_tj_fromi_fromj.IsIncluded[fromi, fromj] == false)
+                {
+                    nb = 0;
+                    ni = Neighbouri[ci, cj, nb];
+                    nj = Neighbourj[ci, cj, nb];
+                    while (PathDistanceTo[ni, nj] != PathDistanceTo[ci, cj] - 1)
+                    {
+                        nb++;
+                        ni = Neighbouri[ci, cj, nb];
+                        nj = Neighbourj[ci, cj, nb];
+                    }
+                    ci = ni;
+                    cj = nj;
+                    Path_ti_tj_fromi_fromj.AddCell(ci, cj);
+                }
+            }
+
+
+            PathDistanceTo = new int[this.MazeWidth, this.MazeHeight];
+            for (i2 = 0; i2 < this.MazeWidth; i2++)
+            {
+                for (j2 = 0; j2 < this.MazeHeight; j2++)
+                {
+                    if (fromi == i2 & fromj == j2)
+                    {
+                        PathDistanceTo[i2, j2] = 0;
+                    }
+                    else
+                    {
+                        PathDistanceTo[i2, j2] = this.NoPath;
+                    }
+                }
+            }
+
+            RingA.AddCell(fromi, fromj);
 
             hRouteDistance = 1;
 
@@ -337,16 +481,13 @@ namespace MazeCalculator
                         i2 = Neighbouri[RingA.csi[r], RingA.csj[r], n];
                         j2 = Neighbourj[RingA.csi[r], RingA.csj[r], n];
 
-                        if (this.MyCellPairs[i1, j1, i2, j2].PathDistance == this.NoPath)
+                        if (PathDistanceTo[i2, j2] == this.NoPath)
                         {
-                            this.MyCellPairs[i1, j1, i2, j2].PathDistance = hRouteDistance;
-                            if (RingB.IsIncluded[i2, j2] == false)
-                            {
-                                RingB.CellCount += 1;
-                                RingB.csi[RingB.CellCount - 1] = i2;
-                                RingB.csj[RingB.CellCount - 1] = j2;
-                                RingB.IsIncluded[i2, j2] = true;
-                            }
+                            PathDistanceTo[i2, j2] = hRouteDistance;
+                            RingB.AddCell(i2, j2);//AddCell will avoid duplicates
+                            MyResult.MostDistanti = i2;
+                            MyResult.MostDistantj = j2;
+                            MyResult.MostDistantd = hRouteDistance;
                         }
                     }
                 }
@@ -354,6 +495,13 @@ namespace MazeCalculator
                 hRouteDistance += 1;
                 Application.DoEvents();
             } while (RingB.CellCount > 0);
+
+            MyResult.RequestedDistance = PathDistanceTo[toi, toj];
+
+            LoadPath(toi, toj, ref RequestedPath);
+            LoadPath(MyResult.MostDistanti, MyResult.MostDistantj, ref PathToMostDistant);
+
+            return MyResult;
         }
 
         private void InitSetNumbers()
@@ -392,7 +540,7 @@ namespace MazeCalculator
 
             this.OpenCloseWalls(false);
             this.GenerateWallDoorPermutation();
-            MessageBox.Show("GenerateWallDoorPermutation ended");
+            //MessageBox.Show("GenerateWallDoorPermutation ended");
             this.InitSetNumbers();
 
             for (m = 0; m < this.NumberOfWallDoors; m++)
@@ -418,6 +566,7 @@ namespace MazeCalculator
                         }
                     }
                     this.NumberOfSets--;
+                    Application.DoEvents();
                 }
                 if (this.NumberOfSets <= 1)
                 {

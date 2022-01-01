@@ -159,28 +159,37 @@ namespace MazeCalculator
                 MessageBox.Show("Use format like 3,1 or 5,8 for point coordinates");
                 return MyResult;
             }
-            MyResult.ValidEntry = true;
-            return MyResult;
+            if (MyResult.i1 >= 0 & MyResult.j1 >= 0 & MyResult.i2 >= 0 & MyResult.j2 >= 0 &
+                MyResult.i1 < MyMaze.MazeWidth & MyResult.j1 < MyMaze.MazeHeight & 
+                MyResult.i2 < MyMaze.MazeWidth & MyResult.j2 < MyMaze.MazeHeight)
+            {
+                MyResult.ValidEntry = true;
+                return MyResult;
+            } else
+            {
+                MessageBox.Show("Coordinates are not in required range.");
+                return MyResult;
+            }
         }
 
         private void btnCalculateDistances_Click(object sender, EventArgs e)
         {
-            int i1;
-            int j1;
-            int i2;
-            int j2;
 
             PointFromToEntry a = ValidatePointFromTo();
+            if (a.ValidEntry == true)
+            {
+                MyMaze.pAi = a.i1;
+                MyMaze.pAj = a.j1;
+                MyMaze.pBi = a.i2;
+                MyMaze.pBj = a.j2;
+                MyMaze.calculatePathDistance(rbPathAB.Checked, rbPathAC.Checked, rbPathXY.Checked);
+            }
 
-            MyMaze.calculatePathDistance();
+        }
 
-            string s = "";
-
-            i1 = 0; j1 = 0; i2 = MyMaze.MazeWidth - 1; j2 = MyMaze.MazeHeight - 1;
-            s += i1.ToString() + "," + j1.ToString() + "," + i2.ToString() + "," + j2.ToString() + ","
-                + MyMaze.MyCellPairs[i1, j1, i2, j2].PathDistance.ToString() + "\n";
-
-            MessageBox.Show(s);
+        private void btnClearColors_Click(object sender, EventArgs e)
+        {
+            MyMaze.ClearColors();
         }
     }
 }
