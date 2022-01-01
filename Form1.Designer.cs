@@ -273,7 +273,6 @@ namespace MazeCalculator
             this.rbPathAB.Name = "rbPathAB";
             this.rbPathAB.Size = new System.Drawing.Size(138, 21);
             this.rbPathAB.TabIndex = 23;
-            this.rbPathAB.TabStop = true;
             this.rbPathAB.Text = "Show path in png";
             this.rbPathAB.UseVisualStyleBackColor = true;
             // 
@@ -284,13 +283,13 @@ namespace MazeCalculator
             this.rbPathAC.Name = "rbPathAC";
             this.rbPathAC.Size = new System.Drawing.Size(191, 21);
             this.rbPathAC.TabIndex = 24;
-            this.rbPathAC.TabStop = true;
             this.rbPathAC.Text = "Show path to most distant";
             this.rbPathAC.UseVisualStyleBackColor = true;
             // 
             // rbPathXY
             // 
             this.rbPathXY.AutoSize = true;
+            this.rbPathXY.Checked = true;
             this.rbPathXY.Location = new System.Drawing.Point(368, 433);
             this.rbPathXY.Name = "rbPathXY";
             this.rbPathXY.Size = new System.Drawing.Size(191, 21);

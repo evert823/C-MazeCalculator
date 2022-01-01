@@ -346,29 +346,6 @@ namespace MazeCalculator
             MessageBox.Show("Max distance from this point : " + this.distance_AC.ToString()
                         + " --> " + this.pCi.ToString() + "," + this.pCj.ToString());
 
-            this.distance_XY = -1;
-            this.pXi = -1;
-            this.pXj = -1;
-            this.pYi = -1;
-            this.pYj = -1;
-
-            for (i1 = 0; i1 < this.MazeWidth; i1++)
-            {
-                for (j1 = 0; j1 < this.MazeHeight; j1++)
-                {
-                    MyResult = CalculatePathDistanceFrom(i1, j1, 0, 0, ref tmpPath_AB, ref tmpPath_AC);
-                    if (MyResult.MostDistantd > this.distance_XY)
-                    {
-                        this.distance_XY = MyResult.MostDistantd;
-                        this.pXi = i1;
-                        this.pXj = j1;
-                        this.pYi = MyResult.MostDistanti;
-                        this.pYj = MyResult.MostDistantj;
-                        this.CopyCellSet(tmpPath_AC, this.Path_XY);
-                    }
-                }
-            }
-
             if (MarkAB == true)
             {
                 this.MarkCellSet(ref this.Path_AB, MarkColor.Red);
@@ -377,14 +354,35 @@ namespace MazeCalculator
             {
                 this.MarkCellSet(ref this.Path_AC, MarkColor.Yellow);
             }
+
             if (MarkXY == true)
             {
+                this.distance_XY = -1;
+                this.pXi = -1;
+                this.pXj = -1;
+                this.pYi = -1;
+                this.pYj = -1;
+
+                for (i1 = 0; i1 < this.MazeWidth; i1++)
+                {
+                    for (j1 = 0; j1 < this.MazeHeight; j1++)
+                    {
+                        MyResult = CalculatePathDistanceFrom(i1, j1, 0, 0, ref tmpPath_AB, ref tmpPath_AC);
+                        if (MyResult.MostDistantd > this.distance_XY)
+                        {
+                            this.distance_XY = MyResult.MostDistantd;
+                            this.pXi = i1;
+                            this.pXj = j1;
+                            this.pYi = MyResult.MostDistanti;
+                            this.pYj = MyResult.MostDistantj;
+                            this.CopyCellSet(tmpPath_AC, this.Path_XY);
+                        }
+                    }
+                }
+                MessageBox.Show("Max distance overall : " + this.distance_XY.ToString() + " --> " + this.pXi.ToString() + "," + this.pXj.ToString() + "," + this.pYi.ToString() + "," + this.pYj.ToString());
                 this.MarkCellSet(ref this.Path_XY, MarkColor.Green);
             }
-
-            MessageBox.Show("Max distance overall : " + this.distance_XY.ToString() + " --> " + this.pXi.ToString() + "," + this.pXj.ToString() + "," + this.pYi.ToString() + "," + this.pYj.ToString());
         }
-
 
         private CalculatePathDistanceResult CalculatePathDistanceFrom(int fromi, int fromj, int toi, int toj, ref CellSet RequestedPath, ref CellSet PathToMostDistant)
         {

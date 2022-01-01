@@ -39,7 +39,9 @@ namespace MazeCalculator
 
         private void btnGeneratePerfectMaze_Click(object sender, EventArgs e)
         {
+            EnableAllControls(false);
             this.MyMaze.GeneratePerfectMaze();
+            EnableAllControls(true);
         }
 
         private void btnLoadFromText_Click(object sender, EventArgs e)
@@ -172,17 +174,41 @@ namespace MazeCalculator
             }
         }
 
+
+        private void EnableAllControls(bool pEnable)
+        {
+            this.btnApplySizeChanges.Enabled = pEnable;
+            this.btnCalculateDistances.Enabled = pEnable;
+            this.btnClearColors.Enabled = pEnable;
+            this.btnLoadFromText.Enabled = pEnable;
+            this.btnSaveAsPng.Enabled = pEnable;
+            this.btnSaveAsText.Enabled = pEnable;
+            this.btnGeneratePerfectMaze.Enabled = pEnable;
+            this.btnDisconnectAll.Enabled = pEnable;
+            this.btnConnectAll.Enabled = pEnable;
+            this.rbPathAB.Enabled = pEnable;
+            this.rbPathAC.Enabled = pEnable;
+            this.rbPathXY.Enabled = pEnable;
+        }
         private void btnCalculateDistances_Click(object sender, EventArgs e)
         {
 
             PointFromToEntry a = ValidatePointFromTo();
             if (a.ValidEntry == true)
             {
+                EnableAllControls(false);
                 MyMaze.pAi = a.i1;
                 MyMaze.pAj = a.j1;
                 MyMaze.pBi = a.i2;
                 MyMaze.pBj = a.j2;
+
+                if (MyMaze.MazeWidth > 120 & rbPathXY.Checked == true)
+                {
+                    MessageBox.Show("The Show overall longest path option will be time taking for large mazes.");
+                }
+
                 MyMaze.calculatePathDistance(rbPathAB.Checked, rbPathAC.Checked, rbPathXY.Checked);
+                EnableAllControls(true);
             }
 
         }
@@ -190,6 +216,7 @@ namespace MazeCalculator
         private void btnClearColors_Click(object sender, EventArgs e)
         {
             MyMaze.ClearColors();
+            MessageBox.Show("DONE");
         }
     }
 }
