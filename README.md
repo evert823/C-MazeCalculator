@@ -1,7 +1,7 @@
 # C-MazeCalculator
 Maze stuff with C#
 
-This is a C# project for rextangular mazes of any size.
+This is a C# project for rectangular mazes of any size.
 The GUI is very minimal, but it will allow you to produce a png image.
 It also supports a text format so that mazes can be saved into and loaded from textfiles.
 
