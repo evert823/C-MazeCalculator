@@ -164,6 +164,8 @@ namespace MazeCalculator
             int i;
             int j;
 
+            this.ClearColors();
+
             for (i = 0; i < this.MazeWidth; i++)
             {
                 for (j = 0; j < this.MazeHeight; j++)
