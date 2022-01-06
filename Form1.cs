@@ -41,6 +41,7 @@ namespace MazeCalculator
         {
             EnableAllControls(false);
             this.MyMaze.GeneratePerfectMaze();
+            MessageBox.Show("Maze has been generated");
             EnableAllControls(true);
         }
 
@@ -189,6 +190,7 @@ namespace MazeCalculator
             this.rbPathAB.Enabled = pEnable;
             this.rbPathAC.Enabled = pEnable;
             this.rbPathXY.Enabled = pEnable;
+            this.btnSpecialSearch.Enabled = pEnable;
         }
         private void btnCalculateDistances_Click(object sender, EventArgs e)
         {
@@ -208,6 +210,19 @@ namespace MazeCalculator
                 }
 
                 MyMaze.calculatePathDistance(rbPathAB.Checked, rbPathAC.Checked, rbPathXY.Checked);
+
+                MessageBox.Show("Requested distance : " + this.MyMaze.distance_AB.ToString());
+                MessageBox.Show("Max distance from this point : " + this.MyMaze.distance_AC.ToString()
+                            + " --> " + this.MyMaze.pCi.ToString() + "," + this.MyMaze.pCj.ToString());
+
+                if (rbPathXY.Checked == true)
+                {
+                    MessageBox.Show("Max distance overall : " + this.MyMaze.distance_XY.ToString() + " --> "
+                        + this.MyMaze.pXi.ToString() + "," + this.MyMaze.pXj.ToString() + ","
+                        + this.MyMaze.pYi.ToString() + "," + this.MyMaze.pYj.ToString());
+                }
+
+
                 EnableAllControls(true);
             }
 
@@ -217,6 +232,42 @@ namespace MazeCalculator
         {
             MyMaze.ClearColors();
             MessageBox.Show("DONE");
+        }
+
+        private void btnSpecialSearch_Click(object sender, EventArgs e)
+        {
+            int d;
+            int counter;
+            d = 0;
+            counter = 0;
+
+            EnableAllControls(false);
+
+            MyMaze.ResetMaze(75, 75);
+
+            while (counter < 720)
+            {
+                counter++;
+                MyMaze.GeneratePerfectMaze();
+                MyMaze.calculatePathDistance(false, false, true);
+                if (MyMaze.distance_XY > d)
+                {
+                    d = MyMaze.distance_XY;
+
+                    string outputfilepath = txtbWorkingDirectory.Text;
+                    if (outputfilepath.EndsWith("\\") == false)
+                    {
+                        outputfilepath += "\\";
+                    }
+                    outputfilepath += "Maze_75x75_longpath.txt";
+                    string[] outputLines = MyMaze.MazeAsText();
+                    File.WriteAllLines(outputfilepath, outputLines);
+                }
+            }
+
+            MessageBox.Show("Special search done");
+
+            EnableAllControls(true);
         }
     }
 }

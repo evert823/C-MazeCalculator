@@ -55,6 +55,7 @@ namespace MazeCalculator
             this.rbPathAB = new System.Windows.Forms.RadioButton();
             this.rbPathAC = new System.Windows.Forms.RadioButton();
             this.rbPathXY = new System.Windows.Forms.RadioButton();
+            this.btnSpecialSearch = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnGeneratePerfectMaze
@@ -298,11 +299,22 @@ namespace MazeCalculator
             this.rbPathXY.Text = "Show overall longest path";
             this.rbPathXY.UseVisualStyleBackColor = true;
             // 
+            // btnSpecialSearch
+            // 
+            this.btnSpecialSearch.Location = new System.Drawing.Point(832, 275);
+            this.btnSpecialSearch.Name = "btnSpecialSearch";
+            this.btnSpecialSearch.Size = new System.Drawing.Size(157, 23);
+            this.btnSpecialSearch.TabIndex = 26;
+            this.btnSpecialSearch.Text = "Special search";
+            this.btnSpecialSearch.UseVisualStyleBackColor = true;
+            this.btnSpecialSearch.Click += new System.EventHandler(this.btnSpecialSearch_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1001, 495);
+            this.Controls.Add(this.btnSpecialSearch);
             this.Controls.Add(this.rbPathXY);
             this.Controls.Add(this.rbPathAC);
             this.Controls.Add(this.rbPathAB);
@@ -365,6 +377,7 @@ namespace MazeCalculator
         private System.Windows.Forms.RadioButton rbPathAB;
         private System.Windows.Forms.RadioButton rbPathAC;
         private System.Windows.Forms.RadioButton rbPathXY;
+        private System.Windows.Forms.Button btnSpecialSearch;
     }
 }
 

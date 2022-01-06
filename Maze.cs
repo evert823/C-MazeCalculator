@@ -71,13 +71,13 @@ namespace MazeCalculator
     {
         public int MazeWidth;
         public int MazeHeight;
-        public int NoPath;
+        private int NoPath;
 
         public MarkColor[,] CellSetColor;
         public WallsOfCell[,] MyWallsOfCell;
-        public int[,] NeighbourCount;
-        public int[,,] Neighbouri;
-        public int[,,] Neighbourj;
+        private int[,] NeighbourCount;
+        private int[,,] Neighbouri;
+        private int[,,] Neighbourj;
 
         private int[,] WallDoorPermutation;//n, i1, j1, i2, j2
         private int NumberOfWallDoors;
@@ -344,10 +344,6 @@ namespace MazeCalculator
             this.pCj = MyResult.MostDistantj;
             this.distance_AC = MyResult.MostDistantd;
 
-            MessageBox.Show("Requested distance : " + this.distance_AB.ToString());
-            MessageBox.Show("Max distance from this point : " + this.distance_AC.ToString()
-                        + " --> " + this.pCi.ToString() + "," + this.pCj.ToString());
-
             if (MarkAB == true)
             {
                 this.MarkCellSet(ref this.Path_AB, MarkColor.Red);
@@ -381,7 +377,6 @@ namespace MazeCalculator
                         }
                     }
                 }
-                MessageBox.Show("Max distance overall : " + this.distance_XY.ToString() + " --> " + this.pXi.ToString() + "," + this.pXj.ToString() + "," + this.pYi.ToString() + "," + this.pYj.ToString());
                 this.MarkCellSet(ref this.Path_XY, MarkColor.Green);
             }
         }
@@ -573,7 +568,6 @@ namespace MazeCalculator
                     break;
                 }
             }
-            MessageBox.Show("Maze has been generated");
         }
 
         private void SetDirectConnection(int i1, int j1, int i2, int j2, bool bConnected)
