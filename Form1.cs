@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace MazeCalculator
 {
-    public partial class Form1 : Form
+    public partial class frmMainMazeCalculator : Form
     {
         public struct PointFromToEntry
         {
@@ -22,10 +22,10 @@ namespace MazeCalculator
             public bool ValidEntry;
         }
         
-        public Maze MyMaze;
+        public MazeHandler MyMazeHandler;
         public MazeDrawer MyMazeDrawer;
 
-        public Form1()
+        public frmMainMazeCalculator()
         {
             
             InitializeComponent();
@@ -33,54 +33,8 @@ namespace MazeCalculator
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            MyMaze = new Maze(30, 30);
-            MyMazeDrawer = new MazeDrawer(MyMaze);
-        }
-
-        private void btnGeneratePerfectMaze_Click(object sender, EventArgs e)
-        {
-            EnableAllControls(false);
-            this.MyMaze.GeneratePerfectMaze();
-            MessageBox.Show("Maze has been generated");
-            EnableAllControls(true);
-        }
-
-        private void btnLoadFromText_Click(object sender, EventArgs e)
-        {
-            string inputfilepath = txtbWorkingDirectory.Text;
-            if (inputfilepath.EndsWith("\\") == false)
-            {
-                inputfilepath += "\\";
-            }
-            inputfilepath += txtbTextFileName.Text;
-            string[] inputLines = File.ReadAllLines(inputfilepath);
-            MyMaze.SetFromText(inputLines);
-            MessageBox.Show("DONE");
-        }
-
-        private void btnSaveAsText_Click(object sender, EventArgs e)
-        {
-            string outputfilepath = txtbWorkingDirectory.Text;
-            if (outputfilepath.EndsWith("\\") == false)
-            {
-                outputfilepath += "\\";
-            }
-            outputfilepath += txtbTextFileName.Text;
-            string[] outputLines = MyMaze.MazeAsText();
-            File.WriteAllLines(outputfilepath, outputLines);
-            MessageBox.Show("DONE");
-        }
-
-        private void btnSaveAsPng_Click(object sender, EventArgs e)
-        {
-            string outputpngpath = txtbWorkingDirectory.Text;
-            if (outputpngpath.EndsWith("\\") == false)
-            {
-                outputpngpath += "\\";
-            }
-            outputpngpath += txtbPngFileName.Text;
-            MyMazeDrawer.SaveMazeAsImage(outputpngpath);
-            MessageBox.Show("DONE");
+            MyMazeHandler = new MazeHandler(30,30);
+            MyMazeDrawer = new MazeDrawer(MyMazeHandler.MainMaze);
         }
 
         private void btnApplySizeChanges_Click(object sender, EventArgs e)
@@ -104,19 +58,7 @@ namespace MazeCalculator
                 nh = 30;
             }
 
-            MyMaze.ResetMaze(nw, nh);
-            MessageBox.Show("DONE");
-        }
-
-        private void btnDisconnectAll_Click(object sender, EventArgs e)
-        {
-            MyMaze.OpenCloseWalls(false);
-            MessageBox.Show("DONE");
-        }
-
-        private void btnConnectAll_Click(object sender, EventArgs e)
-        {
-            MyMaze.OpenCloseWalls(true);
+            MyMazeHandler.MainMaze.ResetMaze(nw, nh);
             MessageBox.Show("DONE");
         }
 
@@ -163,8 +105,8 @@ namespace MazeCalculator
                 return MyResult;
             }
             if (MyResult.i1 >= 0 & MyResult.j1 >= 0 & MyResult.i2 >= 0 & MyResult.j2 >= 0 &
-                MyResult.i1 < MyMaze.MazeWidth & MyResult.j1 < MyMaze.MazeHeight & 
-                MyResult.i2 < MyMaze.MazeWidth & MyResult.j2 < MyMaze.MazeHeight)
+                MyResult.i1 < MyMazeHandler.MainMaze.MazeWidth & MyResult.j1 < MyMazeHandler.MainMaze.MazeHeight & 
+                MyResult.i2 < MyMazeHandler.MainMaze.MazeWidth & MyResult.j2 < MyMazeHandler.MainMaze.MazeHeight)
             {
                 MyResult.ValidEntry = true;
                 return MyResult;
@@ -178,63 +120,117 @@ namespace MazeCalculator
 
         private void EnableAllControls(bool pEnable)
         {
+            this.menuStrip1.Enabled = pEnable;
             this.btnApplySizeChanges.Enabled = pEnable;
-            this.btnCalculateDistances.Enabled = pEnable;
-            this.btnClearColors.Enabled = pEnable;
-            this.btnLoadFromText.Enabled = pEnable;
-            this.btnSaveAsPng.Enabled = pEnable;
-            this.btnSaveAsText.Enabled = pEnable;
-            this.btnGeneratePerfectMaze.Enabled = pEnable;
-            this.btnDisconnectAll.Enabled = pEnable;
-            this.btnConnectAll.Enabled = pEnable;
             this.rbPathAB.Enabled = pEnable;
             this.rbPathAC.Enabled = pEnable;
             this.rbPathXY.Enabled = pEnable;
-            this.btnSpecialSearch.Enabled = pEnable;
         }
-        private void btnCalculateDistances_Click(object sender, EventArgs e)
-        {
 
+        private void ShowNewSize()
+        {
+            txtbMazeWidth.Text = MyMazeHandler.MainMaze.MazeWidth.ToString();
+            txtbMazeHeight.Text = MyMazeHandler.MainMaze.MazeHeight.ToString();
+        }
+
+        private void loadFromTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string inputfilepath = txtbWorkingDirectory.Text;
+            if (inputfilepath.EndsWith("\\") == false)
+            {
+                inputfilepath += "\\";
+            }
+            inputfilepath += txtbTextFileName.Text;
+            string[] inputLines = File.ReadAllLines(inputfilepath);
+            MyMazeHandler.MainMaze.SetFromText(inputLines);
+            ShowNewSize();
+            MessageBox.Show("DONE");
+        }
+
+        private void saveAsTextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string outputfilepath = txtbWorkingDirectory.Text;
+            if (outputfilepath.EndsWith("\\") == false)
+            {
+                outputfilepath += "\\";
+            }
+            outputfilepath += txtbTextFileName.Text;
+            string[] outputLines = MyMazeHandler.MainMaze.MazeAsText();
+            File.WriteAllLines(outputfilepath, outputLines);
+            MessageBox.Show("DONE");
+        }
+
+        private void saveAsPngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string outputpngpath = txtbWorkingDirectory.Text;
+            if (outputpngpath.EndsWith("\\") == false)
+            {
+                outputpngpath += "\\";
+            }
+            outputpngpath += txtbPngFileName.Text;
+            MyMazeDrawer.SaveMazeAsImage(outputpngpath);
+            MessageBox.Show("DONE");
+        }
+
+        private void disconnectAllCellsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MyMazeHandler.MainMaze.OpenCloseWalls(false);
+            MessageBox.Show("DONE");
+        }
+
+        private void connectAllCellsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MyMazeHandler.MainMaze.OpenCloseWalls(true);
+            MessageBox.Show("DONE");
+        }
+
+        private void clearColorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MyMazeHandler.MainMaze.ClearColors();
+            MessageBox.Show("DONE");
+        }
+
+        private void generatePerfectMazeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnableAllControls(false);
+            this.MyMazeHandler.GeneratePerfectMaze();
+            MessageBox.Show("Maze has been generated");
+            EnableAllControls(true);
+        }
+
+        private void calculatePathsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             PointFromToEntry a = ValidatePointFromTo();
             if (a.ValidEntry == true)
             {
                 EnableAllControls(false);
-                MyMaze.pAi = a.i1;
-                MyMaze.pAj = a.j1;
-                MyMaze.pBi = a.i2;
-                MyMaze.pBj = a.j2;
+                MyMazeHandler.MainMaze.pAi = a.i1;
+                MyMazeHandler.MainMaze.pAj = a.j1;
+                MyMazeHandler.MainMaze.pBi = a.i2;
+                MyMazeHandler.MainMaze.pBj = a.j2;
 
-                if (MyMaze.MazeWidth > 120 & rbPathXY.Checked == true)
+                if (MyMazeHandler.MainMaze.MazeWidth > 120 & rbPathXY.Checked == true)
                 {
                     MessageBox.Show("The Show overall longest path option will be time taking for large mazes.");
                 }
 
-                MyMaze.calculatePathDistance(rbPathAB.Checked, rbPathAC.Checked, rbPathXY.Checked);
+                MyMazeHandler.MainMaze.calculatePathDistance(rbPathAB.Checked, rbPathAC.Checked, rbPathXY.Checked);
 
-                MessageBox.Show("Requested distance : " + this.MyMaze.distance_AB.ToString());
-                MessageBox.Show("Max distance from this point : " + this.MyMaze.distance_AC.ToString()
-                            + " --> " + this.MyMaze.pCi.ToString() + "," + this.MyMaze.pCj.ToString());
+                MessageBox.Show("Requested distance : " + this.MyMazeHandler.MainMaze.distance_AB.ToString());
+                MessageBox.Show("Max distance from this point : " + this.MyMazeHandler.MainMaze.distance_AC.ToString()
+                            + " --> " + this.MyMazeHandler.MainMaze.pCi.ToString() + "," + this.MyMazeHandler.MainMaze.pCj.ToString());
 
                 if (rbPathXY.Checked == true)
                 {
-                    MessageBox.Show("Max distance overall : " + this.MyMaze.distance_XY.ToString() + " --> "
-                        + this.MyMaze.pXi.ToString() + "," + this.MyMaze.pXj.ToString() + ","
-                        + this.MyMaze.pYi.ToString() + "," + this.MyMaze.pYj.ToString());
+                    MessageBox.Show("Max distance overall : " + this.MyMazeHandler.MainMaze.distance_XY.ToString() + " --> "
+                        + this.MyMazeHandler.MainMaze.pXi.ToString() + "," + this.MyMazeHandler.MainMaze.pXj.ToString() + ","
+                        + this.MyMazeHandler.MainMaze.pYi.ToString() + "," + this.MyMazeHandler.MainMaze.pYj.ToString());
                 }
-
-
                 EnableAllControls(true);
             }
-
         }
 
-        private void btnClearColors_Click(object sender, EventArgs e)
-        {
-            MyMaze.ClearColors();
-            MessageBox.Show("DONE");
-        }
-
-        private void btnSpecialSearch_Click(object sender, EventArgs e)
+        private void specialSearchToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int d;
             int counter;
@@ -243,30 +239,61 @@ namespace MazeCalculator
 
             EnableAllControls(false);
 
-            MyMaze.ResetMaze(75, 75);
+            MyMazeHandler.MainMaze.ResetMaze(10, 10);
 
-            while (counter < 720)
+            ShowNewSize();
+
+            this.MyMazeHandler.MainMaze.pAi = 0;
+            this.MyMazeHandler.MainMaze.pAj = 0;
+            this.MyMazeHandler.MainMaze.pBi = 9;
+            this.MyMazeHandler.MainMaze.pBj = 9;
+
+            while (counter < 200000)
             {
                 counter++;
-                MyMaze.GeneratePerfectMaze();
-                MyMaze.calculatePathDistance(false, false, true);
-                if (MyMaze.distance_XY > d)
+                MyMazeHandler.GeneratePerfectMaze();
+                MyMazeHandler.MainMaze.calculatePathDistance(true, false, false);
+                if (MyMazeHandler.MainMaze.distance_AB > d)
                 {
-                    d = MyMaze.distance_XY;
+                    d = MyMazeHandler.MainMaze.distance_AB;
 
                     string outputfilepath = txtbWorkingDirectory.Text;
                     if (outputfilepath.EndsWith("\\") == false)
                     {
                         outputfilepath += "\\";
                     }
-                    outputfilepath += "Maze_75x75_longpath.txt";
-                    string[] outputLines = MyMaze.MazeAsText();
+                    outputfilepath += "Maze_10x10_longpath.txt";
+                    string[] outputLines = MyMazeHandler.MainMaze.MazeAsText();
                     File.WriteAllLines(outputfilepath, outputLines);
                 }
             }
 
             MessageBox.Show("Special search done");
 
+            EnableAllControls(true);
+        }
+
+        private void expandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int expand_w;
+            int expand_h;
+
+            frmWidthHeightEntry MyEntryForm = new frmWidthHeightEntry();
+            MyEntryForm.ShowDialog();
+
+            expand_w = MyEntryForm.HorizontalValue;
+            expand_h = MyEntryForm.VerticalValue;
+                        
+            this.MyMazeHandler.ExpandMaze(expand_w, expand_h);
+            ShowNewSize();
+            MessageBox.Show("DONE");
+        }
+
+        private void generatePerfectMazePreserveWallsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnableAllControls(false);
+            this.MyMazeHandler.GeneratePerfectMazePreservingWalls();
+            MessageBox.Show("Maze has been generated");
             EnableAllControls(true);
         }
     }

@@ -521,7 +521,7 @@ namespace MazeCalculator
             }
         }
 
-        public void GeneratePerfectMaze()
+        public void GeneratePerfectMaze(ref WallsOfCell[,] pMandatoryWalls)
         {
             int m;
             int i1;
@@ -532,6 +532,7 @@ namespace MazeCalculator
             int j3;
             int s1;
             int s2;
+            bool IsMandatory;
 
             this.OpenCloseWalls(false);
             this.GenerateWallDoorPermutation();
@@ -545,9 +546,27 @@ namespace MazeCalculator
                 i2 = WallDoorPermutation[m, 2];
                 j2 = WallDoorPermutation[m, 3];
 
+                IsMandatory = false;
+                if (j2 == j1 + 1 & pMandatoryWalls[i1, j1].OpenToTop == false)
+                {
+                    IsMandatory = true;
+                }
+                if (i2 == i1 + 1 & pMandatoryWalls[i1, j1].OpenToRight == false)
+                {
+                    IsMandatory = true;
+                }
+                if (j2 == j1 - 1 & pMandatoryWalls[i1, j1].OpenToBottom == false)
+                {
+                    IsMandatory = true;
+                }
+                if (i2 == i1 - 1 & pMandatoryWalls[i1, j1].OpenToLeft == false)
+                {
+                    IsMandatory = true;
+                }
+
                 s1 = this.SetNumber[i1, j1];
                 s2 = this.SetNumber[i2, j2];
-                if (s1 != s2)
+                if (s1 != s2 & IsMandatory == false)
                 {
                     this.SetDirectConnection(i1, j1, i2, j2, true);
                     for (i3 = 0; i3 < this.MazeWidth; i3++)

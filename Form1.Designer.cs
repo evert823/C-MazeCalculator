@@ -1,7 +1,7 @@
 ﻿
 namespace MazeCalculator
 {
-    partial class Form1
+    partial class frmMainMazeCalculator
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,6 @@ namespace MazeCalculator
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnGeneratePerfectMaze = new System.Windows.Forms.Button();
             this.txtbWorkingDirectory = new System.Windows.Forms.TextBox();
             this.lblWorkingDirectory = new System.Windows.Forms.Label();
             this.txtbTextFileName = new System.Windows.Forms.TextBox();
@@ -41,32 +40,30 @@ namespace MazeCalculator
             this.lblMazeHeight = new System.Windows.Forms.Label();
             this.txtbMazeHeight = new System.Windows.Forms.TextBox();
             this.btnApplySizeChanges = new System.Windows.Forms.Button();
-            this.btnLoadFromText = new System.Windows.Forms.Button();
-            this.btnSaveAsText = new System.Windows.Forms.Button();
-            this.btnSaveAsPng = new System.Windows.Forms.Button();
-            this.btnDisconnectAll = new System.Windows.Forms.Button();
-            this.btnConnectAll = new System.Windows.Forms.Button();
-            this.btnCalculateDistances = new System.Windows.Forms.Button();
             this.lblPointFrom = new System.Windows.Forms.Label();
             this.lblPointTo = new System.Windows.Forms.Label();
             this.txbPointFrom = new System.Windows.Forms.TextBox();
             this.txbPointTo = new System.Windows.Forms.TextBox();
-            this.btnClearColors = new System.Windows.Forms.Button();
             this.rbPathAB = new System.Windows.Forms.RadioButton();
             this.rbPathAC = new System.Windows.Forms.RadioButton();
             this.rbPathXY = new System.Windows.Forms.RadioButton();
-            this.btnSpecialSearch = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadFromTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsTextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsPngToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.disconnectAllCellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.connectAllCellsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mazeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generatePerfectMazeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.calculatePathsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.specialSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generatePerfectMazePreserveWallsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnGeneratePerfectMaze
-            // 
-            this.btnGeneratePerfectMaze.Location = new System.Drawing.Point(36, 334);
-            this.btnGeneratePerfectMaze.Name = "btnGeneratePerfectMaze";
-            this.btnGeneratePerfectMaze.Size = new System.Drawing.Size(177, 23);
-            this.btnGeneratePerfectMaze.TabIndex = 0;
-            this.btnGeneratePerfectMaze.Text = "Generate perfect maze";
-            this.btnGeneratePerfectMaze.UseVisualStyleBackColor = true;
-            this.btnGeneratePerfectMaze.Click += new System.EventHandler(this.btnGeneratePerfectMaze_Click);
             // 
             // txtbWorkingDirectory
             // 
@@ -163,66 +160,6 @@ namespace MazeCalculator
             this.btnApplySizeChanges.UseVisualStyleBackColor = true;
             this.btnApplySizeChanges.Click += new System.EventHandler(this.btnApplySizeChanges_Click);
             // 
-            // btnLoadFromText
-            // 
-            this.btnLoadFromText.Location = new System.Drawing.Point(583, 129);
-            this.btnLoadFromText.Name = "btnLoadFromText";
-            this.btnLoadFromText.Size = new System.Drawing.Size(120, 23);
-            this.btnLoadFromText.TabIndex = 12;
-            this.btnLoadFromText.Text = "Load from text";
-            this.btnLoadFromText.UseVisualStyleBackColor = true;
-            this.btnLoadFromText.Click += new System.EventHandler(this.btnLoadFromText_Click);
-            // 
-            // btnSaveAsText
-            // 
-            this.btnSaveAsText.Location = new System.Drawing.Point(730, 128);
-            this.btnSaveAsText.Name = "btnSaveAsText";
-            this.btnSaveAsText.Size = new System.Drawing.Size(129, 23);
-            this.btnSaveAsText.TabIndex = 13;
-            this.btnSaveAsText.Text = "Save as text";
-            this.btnSaveAsText.UseVisualStyleBackColor = true;
-            this.btnSaveAsText.Click += new System.EventHandler(this.btnSaveAsText_Click);
-            // 
-            // btnSaveAsPng
-            // 
-            this.btnSaveAsPng.Location = new System.Drawing.Point(730, 179);
-            this.btnSaveAsPng.Name = "btnSaveAsPng";
-            this.btnSaveAsPng.Size = new System.Drawing.Size(129, 23);
-            this.btnSaveAsPng.TabIndex = 14;
-            this.btnSaveAsPng.Text = "Save as png";
-            this.btnSaveAsPng.UseVisualStyleBackColor = true;
-            this.btnSaveAsPng.Click += new System.EventHandler(this.btnSaveAsPng_Click);
-            // 
-            // btnDisconnectAll
-            // 
-            this.btnDisconnectAll.Location = new System.Drawing.Point(36, 381);
-            this.btnDisconnectAll.Name = "btnDisconnectAll";
-            this.btnDisconnectAll.Size = new System.Drawing.Size(177, 23);
-            this.btnDisconnectAll.TabIndex = 15;
-            this.btnDisconnectAll.Text = "Disconnect all cells";
-            this.btnDisconnectAll.UseVisualStyleBackColor = true;
-            this.btnDisconnectAll.Click += new System.EventHandler(this.btnDisconnectAll_Click);
-            // 
-            // btnConnectAll
-            // 
-            this.btnConnectAll.Location = new System.Drawing.Point(36, 425);
-            this.btnConnectAll.Name = "btnConnectAll";
-            this.btnConnectAll.Size = new System.Drawing.Size(177, 23);
-            this.btnConnectAll.TabIndex = 16;
-            this.btnConnectAll.Text = "Connect all cells";
-            this.btnConnectAll.UseVisualStyleBackColor = true;
-            this.btnConnectAll.Click += new System.EventHandler(this.btnConnectAll_Click);
-            // 
-            // btnCalculateDistances
-            // 
-            this.btnCalculateDistances.Location = new System.Drawing.Point(255, 334);
-            this.btnCalculateDistances.Name = "btnCalculateDistances";
-            this.btnCalculateDistances.Size = new System.Drawing.Size(196, 23);
-            this.btnCalculateDistances.TabIndex = 17;
-            this.btnCalculateDistances.Text = "Calculate all distances";
-            this.btnCalculateDistances.UseVisualStyleBackColor = true;
-            this.btnCalculateDistances.Click += new System.EventHandler(this.btnCalculateDistances_Click);
-            // 
             // lblPointFrom
             // 
             this.lblPointFrom.AutoSize = true;
@@ -257,16 +194,6 @@ namespace MazeCalculator
             this.txbPointTo.TabIndex = 21;
             this.txbPointTo.Text = "5,8";
             // 
-            // btnClearColors
-            // 
-            this.btnClearColors.Location = new System.Drawing.Point(730, 75);
-            this.btnClearColors.Name = "btnClearColors";
-            this.btnClearColors.Size = new System.Drawing.Size(123, 23);
-            this.btnClearColors.TabIndex = 22;
-            this.btnClearColors.Text = "Clear colors";
-            this.btnClearColors.UseVisualStyleBackColor = true;
-            this.btnClearColors.Click += new System.EventHandler(this.btnClearColors_Click);
-            // 
             // rbPathAB
             // 
             this.rbPathAB.AutoSize = true;
@@ -299,36 +226,140 @@ namespace MazeCalculator
             this.rbPathXY.Text = "Show overall longest path";
             this.rbPathXY.UseVisualStyleBackColor = true;
             // 
-            // btnSpecialSearch
+            // menuStrip1
             // 
-            this.btnSpecialSearch.Location = new System.Drawing.Point(832, 275);
-            this.btnSpecialSearch.Name = "btnSpecialSearch";
-            this.btnSpecialSearch.Size = new System.Drawing.Size(157, 23);
-            this.btnSpecialSearch.TabIndex = 26;
-            this.btnSpecialSearch.Text = "Special search";
-            this.btnSpecialSearch.UseVisualStyleBackColor = true;
-            this.btnSpecialSearch.Click += new System.EventHandler(this.btnSpecialSearch_Click);
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.mazeToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1001, 28);
+            this.menuStrip1.TabIndex = 27;
+            this.menuStrip1.Text = "menuStrip1";
             // 
-            // Form1
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadFromTextToolStripMenuItem,
+            this.saveAsTextToolStripMenuItem,
+            this.saveAsPngToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // loadFromTextToolStripMenuItem
+            // 
+            this.loadFromTextToolStripMenuItem.Name = "loadFromTextToolStripMenuItem";
+            this.loadFromTextToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.loadFromTextToolStripMenuItem.Text = "Load from text";
+            this.loadFromTextToolStripMenuItem.Click += new System.EventHandler(this.loadFromTextToolStripMenuItem_Click);
+            // 
+            // saveAsTextToolStripMenuItem
+            // 
+            this.saveAsTextToolStripMenuItem.Name = "saveAsTextToolStripMenuItem";
+            this.saveAsTextToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.saveAsTextToolStripMenuItem.Text = "Save as text";
+            this.saveAsTextToolStripMenuItem.Click += new System.EventHandler(this.saveAsTextToolStripMenuItem_Click);
+            // 
+            // saveAsPngToolStripMenuItem
+            // 
+            this.saveAsPngToolStripMenuItem.Name = "saveAsPngToolStripMenuItem";
+            this.saveAsPngToolStripMenuItem.Size = new System.Drawing.Size(190, 26);
+            this.saveAsPngToolStripMenuItem.Text = "Save as png";
+            this.saveAsPngToolStripMenuItem.Click += new System.EventHandler(this.saveAsPngToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.disconnectAllCellsToolStripMenuItem,
+            this.connectAllCellsToolStripMenuItem,
+            this.clearColorsToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // disconnectAllCellsToolStripMenuItem
+            // 
+            this.disconnectAllCellsToolStripMenuItem.Name = "disconnectAllCellsToolStripMenuItem";
+            this.disconnectAllCellsToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            this.disconnectAllCellsToolStripMenuItem.Text = "Disconnect all cells";
+            this.disconnectAllCellsToolStripMenuItem.Click += new System.EventHandler(this.disconnectAllCellsToolStripMenuItem_Click);
+            // 
+            // connectAllCellsToolStripMenuItem
+            // 
+            this.connectAllCellsToolStripMenuItem.Name = "connectAllCellsToolStripMenuItem";
+            this.connectAllCellsToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            this.connectAllCellsToolStripMenuItem.Text = "Connect all cells";
+            this.connectAllCellsToolStripMenuItem.Click += new System.EventHandler(this.connectAllCellsToolStripMenuItem_Click);
+            // 
+            // clearColorsToolStripMenuItem
+            // 
+            this.clearColorsToolStripMenuItem.Name = "clearColorsToolStripMenuItem";
+            this.clearColorsToolStripMenuItem.Size = new System.Drawing.Size(218, 26);
+            this.clearColorsToolStripMenuItem.Text = "Clear colors";
+            this.clearColorsToolStripMenuItem.Click += new System.EventHandler(this.clearColorsToolStripMenuItem_Click);
+            // 
+            // mazeToolStripMenuItem
+            // 
+            this.mazeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generatePerfectMazeToolStripMenuItem,
+            this.calculatePathsToolStripMenuItem,
+            this.specialSearchToolStripMenuItem,
+            this.expandToolStripMenuItem,
+            this.generatePerfectMazePreserveWallsToolStripMenuItem});
+            this.mazeToolStripMenuItem.Name = "mazeToolStripMenuItem";
+            this.mazeToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
+            this.mazeToolStripMenuItem.Text = "Maze";
+            // 
+            // generatePerfectMazeToolStripMenuItem
+            // 
+            this.generatePerfectMazeToolStripMenuItem.Name = "generatePerfectMazeToolStripMenuItem";
+            this.generatePerfectMazeToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.generatePerfectMazeToolStripMenuItem.Text = "Generate perfect maze";
+            this.generatePerfectMazeToolStripMenuItem.Click += new System.EventHandler(this.generatePerfectMazeToolStripMenuItem_Click);
+            // 
+            // calculatePathsToolStripMenuItem
+            // 
+            this.calculatePathsToolStripMenuItem.Name = "calculatePathsToolStripMenuItem";
+            this.calculatePathsToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.calculatePathsToolStripMenuItem.Text = "Calculate paths";
+            this.calculatePathsToolStripMenuItem.Click += new System.EventHandler(this.calculatePathsToolStripMenuItem_Click);
+            // 
+            // specialSearchToolStripMenuItem
+            // 
+            this.specialSearchToolStripMenuItem.Name = "specialSearchToolStripMenuItem";
+            this.specialSearchToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.specialSearchToolStripMenuItem.Text = "Special search";
+            this.specialSearchToolStripMenuItem.Click += new System.EventHandler(this.specialSearchToolStripMenuItem_Click);
+            // 
+            // expandToolStripMenuItem
+            // 
+            this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.expandToolStripMenuItem.Text = "Expand";
+            this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
+            // 
+            // generatePerfectMazePreserveWallsToolStripMenuItem
+            // 
+            this.generatePerfectMazePreserveWallsToolStripMenuItem.Name = "generatePerfectMazePreserveWallsToolStripMenuItem";
+            this.generatePerfectMazePreserveWallsToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
+            this.generatePerfectMazePreserveWallsToolStripMenuItem.Text = "Generate perfect maze preserve walls";
+            this.generatePerfectMazePreserveWallsToolStripMenuItem.Click += new System.EventHandler(this.generatePerfectMazePreserveWallsToolStripMenuItem_Click);
+            // 
+            // frmMainMazeCalculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1001, 495);
-            this.Controls.Add(this.btnSpecialSearch);
             this.Controls.Add(this.rbPathXY);
             this.Controls.Add(this.rbPathAC);
             this.Controls.Add(this.rbPathAB);
-            this.Controls.Add(this.btnClearColors);
             this.Controls.Add(this.txbPointTo);
             this.Controls.Add(this.txbPointFrom);
             this.Controls.Add(this.lblPointTo);
             this.Controls.Add(this.lblPointFrom);
-            this.Controls.Add(this.btnCalculateDistances);
-            this.Controls.Add(this.btnConnectAll);
-            this.Controls.Add(this.btnDisconnectAll);
-            this.Controls.Add(this.btnSaveAsPng);
-            this.Controls.Add(this.btnSaveAsText);
-            this.Controls.Add(this.btnLoadFromText);
             this.Controls.Add(this.btnApplySizeChanges);
             this.Controls.Add(this.txtbMazeHeight);
             this.Controls.Add(this.lblMazeHeight);
@@ -340,18 +371,19 @@ namespace MazeCalculator
             this.Controls.Add(this.txtbTextFileName);
             this.Controls.Add(this.lblWorkingDirectory);
             this.Controls.Add(this.txtbWorkingDirectory);
-            this.Controls.Add(this.btnGeneratePerfectMaze);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "frmMainMazeCalculator";
+            this.Text = "Maze Calculator";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnGeneratePerfectMaze;
         private System.Windows.Forms.TextBox txtbWorkingDirectory;
         private System.Windows.Forms.Label lblWorkingDirectory;
         private System.Windows.Forms.TextBox txtbTextFileName;
@@ -363,21 +395,28 @@ namespace MazeCalculator
         private System.Windows.Forms.Label lblMazeHeight;
         private System.Windows.Forms.TextBox txtbMazeHeight;
         private System.Windows.Forms.Button btnApplySizeChanges;
-        private System.Windows.Forms.Button btnLoadFromText;
-        private System.Windows.Forms.Button btnSaveAsText;
-        private System.Windows.Forms.Button btnSaveAsPng;
-        private System.Windows.Forms.Button btnDisconnectAll;
-        private System.Windows.Forms.Button btnConnectAll;
-        private System.Windows.Forms.Button btnCalculateDistances;
         private System.Windows.Forms.Label lblPointFrom;
         private System.Windows.Forms.Label lblPointTo;
         private System.Windows.Forms.TextBox txbPointFrom;
         private System.Windows.Forms.TextBox txbPointTo;
-        private System.Windows.Forms.Button btnClearColors;
         private System.Windows.Forms.RadioButton rbPathAB;
         private System.Windows.Forms.RadioButton rbPathAC;
         private System.Windows.Forms.RadioButton rbPathXY;
-        private System.Windows.Forms.Button btnSpecialSearch;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadFromTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsTextToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsPngToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disconnectAllCellsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem connectAllCellsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearColorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mazeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generatePerfectMazeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem calculatePathsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem specialSearchToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem expandToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generatePerfectMazePreserveWallsToolStripMenuItem;
     }
 }
 
