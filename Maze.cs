@@ -80,7 +80,10 @@ namespace MazeCalculator
         private int[,,] Neighbourj;
 
         private int[,] WallDoorPermutation;//n, i1, j1, i2, j2
-        private int NumberOfWallDoors;
+        public int[,] WallDoorList;//n, i1, j1, i2, j2
+        public int NumberOfWallDoors;
+        public int NumberOfInnerWalls;
+
 
         private int[,] SetNumber;
         private int NumberOfSets;
@@ -181,63 +184,6 @@ namespace MazeCalculator
                 }
             }
         }
-        private void GenerateWallDoorPermutation()
-        {
-            int i;
-            int j;
-            int m;
-            Random MyRandom;
-
-            //private int[,,,,] WallDoorPermutation;//n, i1, j1, i2, j2
-            int n = (this.MazeHeight - 1) * this.MazeWidth;
-            n += (this.MazeWidth - 1) * this.MazeHeight;
-            this.NumberOfWallDoors = n;
-
-            this.WallDoorPermutation = null;
-            this.WallDoorPermutation = new int[n, 4];
-
-            for (m = 0; m < n; m++)
-            {
-                WallDoorPermutation[m, 0] = -1;
-                WallDoorPermutation[m, 1] = -1;
-                WallDoorPermutation[m, 2] = -1;
-                WallDoorPermutation[m, 3] = -1;
-            }
-
-            MyRandom = new Random();
-
-            for (i = 0; i < this.MazeWidth; i++)
-            {
-                for (j = 0; j < this.MazeHeight; j++)
-                {
-                    if (i < this.MazeWidth - 1)
-                    {
-                        m = MyRandom.Next(0, n);
-                        while (WallDoorPermutation[m, 0] > -1)
-                        {
-                            m = MyRandom.Next(0, n);
-                        }
-                        WallDoorPermutation[m, 0] = i;
-                        WallDoorPermutation[m, 1] = j;
-                        WallDoorPermutation[m, 2] = i + 1;
-                        WallDoorPermutation[m, 3] = j;
-                    }
-                    if (j < this.MazeHeight - 1)
-                    {
-                        m = MyRandom.Next(0, n);
-                        while (WallDoorPermutation[m, 0] > -1)
-                        {
-                            m = MyRandom.Next(0, n);
-                        }
-                        WallDoorPermutation[m, 0] = i;
-                        WallDoorPermutation[m, 1] = j;
-                        WallDoorPermutation[m, 2] = i;
-                        WallDoorPermutation[m, 3] = j + 1;
-                    }
-                }
-            }
-        }
-
         private void MarkCellSet(ref CellSet pCellSet, MarkColor pColor)
         {
             int n;
@@ -521,6 +467,110 @@ namespace MazeCalculator
             }
         }
 
+        public void GenerateWallDoorList()
+        {
+            int i;
+            int j;
+            int m;
+
+            //public int[,] WallDoorList;//n, i1, j1, i2, j2
+            int n = (this.MazeHeight - 1) * this.MazeWidth;
+            n += (this.MazeWidth - 1) * this.MazeHeight;
+            this.NumberOfWallDoors = n;
+
+            this.WallDoorList = null;
+            this.WallDoorList = new int[n, 4];
+
+            for (m = 0; m < n; m++)
+            {
+                WallDoorList[m, 0] = -1;
+                WallDoorList[m, 1] = -1;
+                WallDoorList[m, 2] = -1;
+                WallDoorList[m, 3] = -1;
+            }
+
+            m = 0;
+            for (i = 0; i < this.MazeWidth; i++)
+            {
+                for (j = 0; j < this.MazeHeight; j++)
+                {
+                    if (i < this.MazeWidth - 1)
+                    {
+                        WallDoorList[m, 0] = i;
+                        WallDoorList[m, 1] = j;
+                        WallDoorList[m, 2] = i + 1;
+                        WallDoorList[m, 3] = j;
+                        m++;
+                    }
+                    if (j < this.MazeHeight - 1)
+                    {
+                        WallDoorList[m, 0] = i;
+                        WallDoorList[m, 1] = j;
+                        WallDoorList[m, 2] = i;
+                        WallDoorList[m, 3] = j + 1;
+                        m++;
+                    }
+                }
+            }
+        }
+
+        private void GenerateWallDoorPermutation()
+        {
+            int i;
+            int j;
+            int m;
+            Random MyRandom;
+
+            //private int[,,,,] WallDoorPermutation;//n, i1, j1, i2, j2
+            int n = (this.MazeHeight - 1) * this.MazeWidth;
+            n += (this.MazeWidth - 1) * this.MazeHeight;
+            this.NumberOfWallDoors = n;
+
+            this.WallDoorPermutation = null;
+            this.WallDoorPermutation = new int[n, 4];
+
+            for (m = 0; m < n; m++)
+            {
+                WallDoorPermutation[m, 0] = -1;
+                WallDoorPermutation[m, 1] = -1;
+                WallDoorPermutation[m, 2] = -1;
+                WallDoorPermutation[m, 3] = -1;
+            }
+
+            MyRandom = new Random();
+
+            for (i = 0; i < this.MazeWidth; i++)
+            {
+                for (j = 0; j < this.MazeHeight; j++)
+                {
+                    if (i < this.MazeWidth - 1)
+                    {
+                        m = MyRandom.Next(0, n);
+                        while (WallDoorPermutation[m, 0] > -1)
+                        {
+                            m = MyRandom.Next(0, n);
+                        }
+                        WallDoorPermutation[m, 0] = i;
+                        WallDoorPermutation[m, 1] = j;
+                        WallDoorPermutation[m, 2] = i + 1;
+                        WallDoorPermutation[m, 3] = j;
+                    }
+                    if (j < this.MazeHeight - 1)
+                    {
+                        m = MyRandom.Next(0, n);
+                        while (WallDoorPermutation[m, 0] > -1)
+                        {
+                            m = MyRandom.Next(0, n);
+                        }
+                        WallDoorPermutation[m, 0] = i;
+                        WallDoorPermutation[m, 1] = j;
+                        WallDoorPermutation[m, 2] = i;
+                        WallDoorPermutation[m, 3] = j + 1;
+                    }
+                }
+            }
+        }
+
         public void GeneratePerfectMaze(ref WallsOfCell[,] pMandatoryWalls)
         {
             int m;
@@ -528,8 +578,6 @@ namespace MazeCalculator
             int j1;
             int i2;
             int j2;
-            int i3;
-            int j3;
             int s1;
             int s2;
             bool IsMandatory;
@@ -569,16 +617,7 @@ namespace MazeCalculator
                 if (s1 != s2 & IsMandatory == false)
                 {
                     this.SetDirectConnection(i1, j1, i2, j2, true);
-                    for (i3 = 0; i3 < this.MazeWidth; i3++)
-                    {
-                        for (j3 = 0; j3 < this.MazeHeight; j3++)
-                        {
-                            if (this.SetNumber[i3, j3] == s2)
-                            {
-                                this.SetNumber[i3, j3] = s1;
-                            }
-                        }
-                    }
+                    ChangeSetNumber(s2, s1);
                     this.NumberOfSets--;
                     Application.DoEvents();
                 }
@@ -589,7 +628,94 @@ namespace MazeCalculator
             }
         }
 
-        private void SetDirectConnection(int i1, int j1, int i2, int j2, bool bConnected)
+        private void ChangeSetNumber(int s_old, int s_new)
+        {
+            int i3;
+            int j3;
+
+            for (i3 = 0; i3 < this.MazeWidth; i3++)
+            {
+                for (j3 = 0; j3 < this.MazeHeight; j3++)
+                {
+                    if (this.SetNumber[i3, j3] == s_old)
+                    {
+                        this.SetNumber[i3, j3] = s_new;
+                    }
+                }
+            }
+        }
+
+        public bool MazeIsConnected()
+        {
+            //Returns true if no two cells are isolated from each other in the current maze,
+            //otherwise false
+            //Meanwhile also counts the number of real inner walls
+
+            bool hIsConnected;
+            int i;
+            int j;
+            int s1;
+            int s2;
+            int hNumberOfInnerWalls;
+
+            this.InitSetNumbers();
+            hNumberOfInnerWalls = 0;
+
+            for (i = 0; i < this.MazeWidth; i++)
+            {
+                for (j = 0; j < this.MazeHeight; j++)
+                {
+                    s1 = this.SetNumber[i, j];
+                    if (i < this.MazeWidth - 1)
+                    {
+                        //Check wall between i, j, i + 1, j
+                        s2 = this.SetNumber[i + 1, j];
+                        if (this.MyWallsOfCell[i, j].OpenToRight == true)
+                        {
+                            if (s1 != s2)
+                            {
+                                ChangeSetNumber(s2, s1);
+                                this.NumberOfSets--;
+                            }
+                        } else
+                        {
+                            hNumberOfInnerWalls++;
+                        }
+                    }
+                    if (j < this.MazeHeight - 1)
+                    {
+                        //Check wall between i, j, i, j + 1
+                        s2 = this.SetNumber[i, j + 1];
+                        if (this.MyWallsOfCell[i, j].OpenToTop == true)
+                        {
+                            if (s1 != s2)
+                            {
+                                ChangeSetNumber(s2, s1);
+                                this.NumberOfSets--;
+                            }
+                        } else
+                        {
+                            hNumberOfInnerWalls++;
+                        }
+                    }
+                    Application.DoEvents();
+                }
+            }
+
+            this.NumberOfInnerWalls = hNumberOfInnerWalls;
+            
+            if (this.NumberOfSets <= 1)
+            {
+                hIsConnected = true;
+            }
+            else
+            {
+                hIsConnected = false;
+            }
+
+            return hIsConnected;
+        }
+        public void SetDirectConnection(int i1, int j1, int i2, int j2, bool bConnected)
         {
             if (i2 == i1 & j2 == j1 + 1)
             {

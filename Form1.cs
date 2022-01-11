@@ -296,5 +296,44 @@ namespace MazeCalculator
             MessageBox.Show("Maze has been generated");
             EnableAllControls(true);
         }
+
+        private void verifyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnableAllControls(false);
+
+            if (this.MyMazeHandler.MainMaze.MazeIsConnected() == true)
+            {
+                MessageBox.Show("The current maze is fully connected.");
+            } else
+            {
+                MessageBox.Show("The current maze has isolated parts.");
+            }
+
+            if (this.MyMazeHandler.MainMaze.NumberOfInnerWalls ==
+                (this.MyMazeHandler.MainMaze.MazeWidth - 1) * (this.MyMazeHandler.MainMaze.MazeHeight - 1))
+            {
+                MessageBox.Show("The current maze has the expected number of walls for a perfect maze");
+            } else
+            {
+                MessageBox.Show("The current maze does not have the expected number of walls for a perfect maze");
+            }
+            EnableAllControls(true);
+        }
+
+        private void systematicGenerationAllMazesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EnableAllControls(false);
+
+            string outputfilepath = txtbWorkingDirectory.Text;
+            if (outputfilepath.EndsWith("\\") == false)
+            {
+                outputfilepath += "\\";
+            }
+            outputfilepath += "DumpAllMazesHere\\";
+
+            this.MyMazeHandler.GenerateAllPerfectMazes(outputfilepath);
+            MessageBox.Show("DONE");
+            EnableAllControls(true);
+        }
     }
 }

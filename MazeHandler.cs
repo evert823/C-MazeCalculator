@@ -1,4 +1,7 @@
-﻿namespace MazeCalculator
+﻿using System.Windows.Forms;
+using System.IO;
+
+namespace MazeCalculator
 {
     public class MazeHandler
     {
@@ -8,6 +11,8 @@
 
         public Maze MainMaze;
         public Maze MandatoryWalls;
+
+        int mazecounter;
 
         public MazeHandler(int pDefaultWidth, int pDefaultHeight)
         {
@@ -68,6 +73,96 @@
                 }
             }
 
+        }
+        
+        private void ProcessWallSubSet(int[] pWallSubSet, int nw, string dumplocation)
+        {
+            string[] s;
+            int k;
+            int m;
+            int i1;
+            int j1;
+            int i2;
+            int j2;
+            string dumpfilename;
+
+            MainMaze.OpenCloseWalls(true);
+
+            for (k = 0; k < pWallSubSet.Length; k++)
+            {
+                m = pWallSubSet[k];
+                i1 = MainMaze.WallDoorList[m, 0];
+                j1 = MainMaze.WallDoorList[m, 1];
+                i2 = MainMaze.WallDoorList[m, 2];
+                j2 = MainMaze.WallDoorList[m, 3];
+
+                MainMaze.SetDirectConnection(i1, j1, i2, j2, false);
+            }
+
+            if(MainMaze.MazeIsConnected() == true)
+            {
+                mazecounter++;
+                dumpfilename = "AllPerfectmazes.txt";
+
+                s = MainMaze.MazeAsText();
+                //File.AppendAllLines(dumplocation + dumpfilename, s);
+                //File.AppendAllText(dumplocation + dumpfilename, "-------------------------\n");
+            }
+        }
+
+        private void LoopOverAllWallSubSets(int[] pWallSubSet, int nw, string dumplocation)
+        {
+            int[] MyWallSubSet;
+            int k;
+            int m;
+            int previousvalue;
+
+            //MessageBox.Show("Enters LoopOver with array length " + pWallSubSet.Length.ToString());
+
+            if (pWallSubSet.Length >= nw)
+            {
+                ProcessWallSubSet(pWallSubSet, nw, dumplocation);
+            } else
+            {
+                MyWallSubSet = new int[pWallSubSet.Length + 1];
+                for (k = 0; k < pWallSubSet.Length; k++)
+                {
+                    MyWallSubSet[k] = pWallSubSet[k];
+                }
+                k = pWallSubSet.Length;
+
+                if (k > 0)
+                {
+                    previousvalue = pWallSubSet[k - 1];
+                } else
+                {
+                    previousvalue = -1;
+                }
+
+                for (m = previousvalue + 1; m < MainMaze.NumberOfWallDoors; m++)
+                {
+                    MyWallSubSet[k] = m;
+                    LoopOverAllWallSubSets(MyWallSubSet, nw, dumplocation);
+                }
+            }
+        }
+
+        public void GenerateAllPerfectMazes(string dumplocation)
+        {
+            int nw;//The number of real walls any perfect maze has
+            int[] MyWallSubSet;
+
+            this.mazecounter = 0;
+
+            //Generates all perfect mazes that exist with width and height of current mainmaze
+            MainMaze.GenerateWallDoorList();
+
+            nw = (MainMaze.MazeWidth - 1) * (MainMaze.MazeHeight -1);
+
+            MyWallSubSet = new int[0];
+            LoopOverAllWallSubSets(MyWallSubSet, nw, dumplocation);
+
+            MessageBox.Show("Total number of mazes found : " + mazecounter.ToString());
         }
     }
 }

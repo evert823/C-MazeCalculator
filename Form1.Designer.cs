@@ -62,6 +62,8 @@ namespace MazeCalculator
             this.specialSearchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.expandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generatePerfectMazePreserveWallsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.verifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.systematicGenerationAllMazesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -304,11 +306,13 @@ namespace MazeCalculator
             // mazeToolStripMenuItem
             // 
             this.mazeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.verifyToolStripMenuItem,
             this.generatePerfectMazeToolStripMenuItem,
             this.calculatePathsToolStripMenuItem,
             this.specialSearchToolStripMenuItem,
             this.expandToolStripMenuItem,
-            this.generatePerfectMazePreserveWallsToolStripMenuItem});
+            this.generatePerfectMazePreserveWallsToolStripMenuItem,
+            this.systematicGenerationAllMazesToolStripMenuItem});
             this.mazeToolStripMenuItem.Name = "mazeToolStripMenuItem";
             this.mazeToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
             this.mazeToolStripMenuItem.Text = "Maze";
@@ -316,28 +320,28 @@ namespace MazeCalculator
             // generatePerfectMazeToolStripMenuItem
             // 
             this.generatePerfectMazeToolStripMenuItem.Name = "generatePerfectMazeToolStripMenuItem";
-            this.generatePerfectMazeToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.generatePerfectMazeToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
             this.generatePerfectMazeToolStripMenuItem.Text = "Generate perfect maze";
             this.generatePerfectMazeToolStripMenuItem.Click += new System.EventHandler(this.generatePerfectMazeToolStripMenuItem_Click);
             // 
             // calculatePathsToolStripMenuItem
             // 
             this.calculatePathsToolStripMenuItem.Name = "calculatePathsToolStripMenuItem";
-            this.calculatePathsToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.calculatePathsToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
             this.calculatePathsToolStripMenuItem.Text = "Calculate paths";
             this.calculatePathsToolStripMenuItem.Click += new System.EventHandler(this.calculatePathsToolStripMenuItem_Click);
             // 
             // specialSearchToolStripMenuItem
             // 
             this.specialSearchToolStripMenuItem.Name = "specialSearchToolStripMenuItem";
-            this.specialSearchToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.specialSearchToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
             this.specialSearchToolStripMenuItem.Text = "Special search";
             this.specialSearchToolStripMenuItem.Click += new System.EventHandler(this.specialSearchToolStripMenuItem_Click);
             // 
             // expandToolStripMenuItem
             // 
             this.expandToolStripMenuItem.Name = "expandToolStripMenuItem";
-            this.expandToolStripMenuItem.Size = new System.Drawing.Size(243, 26);
+            this.expandToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
             this.expandToolStripMenuItem.Text = "Expand";
             this.expandToolStripMenuItem.Click += new System.EventHandler(this.expandToolStripMenuItem_Click);
             // 
@@ -347,6 +351,20 @@ namespace MazeCalculator
             this.generatePerfectMazePreserveWallsToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
             this.generatePerfectMazePreserveWallsToolStripMenuItem.Text = "Generate perfect maze preserve walls";
             this.generatePerfectMazePreserveWallsToolStripMenuItem.Click += new System.EventHandler(this.generatePerfectMazePreserveWallsToolStripMenuItem_Click);
+            // 
+            // verifyToolStripMenuItem
+            // 
+            this.verifyToolStripMenuItem.Name = "verifyToolStripMenuItem";
+            this.verifyToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
+            this.verifyToolStripMenuItem.Text = "Verify";
+            this.verifyToolStripMenuItem.Click += new System.EventHandler(this.verifyToolStripMenuItem_Click);
+            // 
+            // systematicGenerationAllMazesToolStripMenuItem
+            // 
+            this.systematicGenerationAllMazesToolStripMenuItem.Name = "systematicGenerationAllMazesToolStripMenuItem";
+            this.systematicGenerationAllMazesToolStripMenuItem.Size = new System.Drawing.Size(340, 26);
+            this.systematicGenerationAllMazesToolStripMenuItem.Text = "Systematic generation all mazes";
+            this.systematicGenerationAllMazesToolStripMenuItem.Click += new System.EventHandler(this.systematicGenerationAllMazesToolStripMenuItem_Click);
             // 
             // frmMainMazeCalculator
             // 
@@ -417,6 +435,8 @@ namespace MazeCalculator
         private System.Windows.Forms.ToolStripMenuItem specialSearchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem expandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem generatePerfectMazePreserveWallsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem verifyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem systematicGenerationAllMazesToolStripMenuItem;
     }
 }
 
